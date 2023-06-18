@@ -20,110 +20,85 @@ import ScrollToTop from "./components/ScrollToTop";
 import Blogs from "./pages/Blogs";
 
 function App() {
-    const [active, setActive] = useState("home");
-    const [user, setUser] = useState(null);
+  const [active, setActive] = useState("home");
+  const [user, setUser] = useState(null);
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        auth.onAuthStateChanged((authUser) => {
-            if (authUser) {
-                setUser(authUser);
-            } else {
-                setUser(null);
-            }
-        });
-    }, []);
+  useEffect(() => {
+    auth.onAuthStateChanged((authUser) => {
+      if (authUser) {
+        setUser(authUser);
+      } else {
+        setUser(null);
+      }
+    });
+  }, []);
 
-    const handleLogout = () => {
-        signOut(auth).then(() => {
-            setUser(null);
-            setActive("login");
-            navigate("/auth");
-        });
-    };
+  const handleLogout = () => {
+    signOut(auth).then(() => {
+      setUser(null);
+      setActive("login");
+      navigate("/auth");
+    });
+  };
 
-    return ( <
-            Routes >
-            <
-            Route path = "/"
-            element = { < Home setActive = { setActive }
-                active = { active }
-                user = { user }
-                />} /
-                >
-                <
-                Route
-                path = "/search"
-                element = { < Home setActive = { setActive }
-                    active = { active }
-                    user = { user }
-                    />} /
-                    >
-                    <
-                    Route
-                    path = "/detail/:id"
-                    element = { < Detail setActive = { setActive }
-                        user = { user }
-                        />} /
-                        >
-                        <
-                        Route
-                        path = "/create"
-                        element = {
-                            (user) => {
-                                if (user ? .uid) {
-                                    return <AddEditBlog user = { user }
-                                    />;
-                                } else {
-                                    return <Navigate to = "/" / > ;
-                                }
-                            }
-                        }
-                        /> <
-                        Route
-                        path = "/update/:id"
-                        element = {
-                            (user) => {
-                                if (user ? .uid) {
-                                    return <AddEditBlog user = { user }
-                                    setActive = { setActive }
-                                    />;
-                                } else {
-                                    return <Navigate to = "/" / > ;
-                                }
-                            }
-                        }
-                        /> <
-                        Route path = "/blogs"
-                        element = { < Blogs setActive = { setActive }
-                            />} / >
-                            <
-                            Route path = "/tag/:tag"
-                            element = { < TagBlog setActive = { setActive }
-                                />} / >
-                                <
-                                Route
-                                path = "/category/:category"
-                                element = { < CategoryBlog setActive = { setActive }
-                                    />} /
-                                    >
-                                    <
-                                    Route path = "/about"
-                                    element = { < About / > }
-                                    /> <
-                                    Route
-                                    path = "/auth"
-                                    element = { < Auth setActive = { setActive }
-                                        setUser = { setUser }
-                                        />} /
-                                        >
-                                        <
-                                        Route path = "*"
-                                        element = { < NotFound / > }
-                                        /> <
-                                        /Routes>
-                                    );
-                                }
+  return (
+    <>
+      <Header user={user} handleLogout={handleLogout} />{" "}
+      <Routes>
+        <Route
+          path="/"
+          element={<Home setActive={setActive} active={active} user={user} />}
+        />
+        <Route
+          path="/search"
+          element={<Home setActive={setActive} active={active} user={user} />}
+        />
+        <Route
+          path="/detail/:id"
+          element={<Detail setActive={setActive} user={user} />}
+        />
+        <Route
+          path="/create"
+          element={
+            user && user.uid ? (
+              <AddEditBlog user={user} />
+            ) : (
+              <Navigate
+                to="/
+                            "
+              />
+            )
+          }
+        />{" "}
+        <Route
+          path="/update/:id"
+          element={
+            user && user.uid ? (
+              <AddEditBlog user={user} setActive={setActive} />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        />{" "}
+        <Route path="/blogs" element={<Blogs setActive={setActive} />} />
+        <Route path="/tag/:tag" element={<TagBlog setActive={setActive} />} />
+        <Route
+          path="/category/:category"
+          element={<CategoryBlog setActive={setActive} />}
+        />
+        <Route path="/about" element={<About />} />{" "}
+        <Route
+          path="/auth"
+          element={<Auth setActive={setActive} setUser={setUser} />}
+        />
+        <Route path="*" element={<NotFound />} />{" "}
+      </Routes>{" "}
+      <ToastContainer />
+      <ScrollToTop />
+    </>
+  );
+}
 
-                                export default App;
+export default App;
