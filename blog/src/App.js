@@ -131,8 +131,7 @@ function App() {
                                 export default App; < Route
                                 path = "/category/:category"
                                 element = { < CategoryBlog setActive = { setActive }
-                                    />} /
-                                    >
+                                    />} / >
                                     <
                                     Route path = "/about"
                                     element = { < About / > }
@@ -141,13 +140,12 @@ function App() {
                                     path = "/auth"
                                     element = { < Auth setActive = { setActive }
                                         setUser = { setUser }
-                                        />} /
-                                        >
+                                        />} / >
                                         <
                                         Route path = "*"
                                         element = { < NotFound / > }
-                                        /> <
-                                        /Routes> <
+                                        /> < /
+                                        Routes > <
                                         /div>
                                     );
                                 }
