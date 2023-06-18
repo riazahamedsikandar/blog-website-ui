@@ -1,28 +1,28 @@
-import { useState, useEffect } from "react";
-import "./App.css";
-import "./style.scss";
-import "./media-query.css";
-import Home from "./pages/Home";
+import React, { useState, useEffect } from "react";
 import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Header from "./components/Header";
+import ScrollToTop from "./components/ScrollToTop";
+import Home from "./pages/Home";
 import Detail from "./pages/Detail";
 import AddEditBlog from "./pages/AddEditBlog";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
-import Header from "./components/Header";
 import Auth from "./pages/Auth";
-import { auth } from "./firebase";
-import { signOut } from "firebase/auth";
 import TagBlog from "./pages/TagBlog";
 import CategoryBlog from "./pages/CategoryBlog";
-import ScrollToTop from "./components/ScrollToTop";
 import Blogs from "./pages/Blogs";
+import { auth } from "./firebase";
+import { signOut } from "firebase/auth";
+
+import "./App.css";
+import "./style.scss";
+import "./media-query.css";
 
 function App() {
     const [active, setActive] = useState("home");
     const [user, setUser] = useState(null);
-
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -36,11 +36,15 @@ function App() {
     }, []);
 
     const handleLogout = () => {
-        signOut(auth).then(() => {
-            setUser(null);
-            setActive("login");
-            navigate("/auth");
-        });
+        signOut(auth)
+            .then(() => {
+                setUser(null);
+                setActive("login");
+                navigate("/auth");
+            })
+            .catch((error) => {
+                console.log(error.message);
+            });
     };
 
     return ( <
@@ -61,22 +65,19 @@ function App() {
             element = { < Home setActive = { setActive }
                 active = { active }
                 user = { user }
-                />} /
-                >
+                />} / >
                 <
                 Route
                 path = "/search"
                 element = { < Home setActive = { setActive }
                     user = { user }
-                    />} /
-                    >
+                    />} / >
                     <
                     Route
                     path = "/detail/:id"
                     element = { < Detail setActive = { setActive }
                         user = { user }
-                        />} /
-                        >
+                        />} / >
                         <
                         Route
                         path = "/create"
@@ -109,8 +110,7 @@ function App() {
                                 Route
                                 path = "/category/:category"
                                 element = { < CategoryBlog setActive = { setActive }
-                                    />} /
-                                    >
+                                    />} / >
                                     <
                                     Route path = "/about"
                                     element = { < About / > }
@@ -119,13 +119,12 @@ function App() {
                                     path = "/auth"
                                     element = { < Auth setActive = { setActive }
                                         setUser = { setUser }
-                                        />} /
-                                        >
+                                        />} / >
                                         <
                                         Route path = "*"
                                         element = { < NotFound / > }
-                                        /> <
-                                        /Routes> <
+                                        /> < /
+                                        Routes > <
                                         /div>
                                     );
                                 }
