@@ -36,15 +36,11 @@ function App() {
     }, []);
 
     const handleLogout = () => {
-        signOut(auth)
-            .then(() => {
-                setUser(null);
-                setActive("login");
-                navigate("/auth");
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        signOut(auth).then(() => {
+            setUser(null);
+            setActive("login");
+            navigate("/auth");
+        });
     };
 
     return ( <
@@ -65,33 +61,35 @@ function App() {
             element = { < Home setActive = { setActive }
                 active = { active }
                 user = { user }
-                />} / >
+                />} /
+                >
                 <
-                Route path = "/search"
+                Route
+                path = "/search"
                 element = { < Home setActive = { setActive }
                     user = { user }
-                    />} / >
+                    />} /
+                    >
                     <
-                    Route path = "/detail/:id"
+                    Route
+                    path = "/detail/:id"
                     element = { < Detail setActive = { setActive }
                         user = { user }
-                        />} / >
+                        />} /
+                        >
                         <
                         Route
                         path = "/create"
                         element = {
-                            user && user.uid ? ( <
-                                AddEditBlog user = { user }
-                                />
-                            ) : ( <
-                                Navigate to = "/" / >
-                            )
+                            user ? .uid ? < AddEditBlog user = { user }
+                            /> : <Navigate to="/
+                            " />
                         }
                         /> <
                         Route
                         path = "/update/:id"
                         element = {
-                            user && user.uid ? ( <
+                            user ? .uid ? ( <
                                 AddEditBlog user = { user }
                                 setActive = { setActive }
                                 />
@@ -108,30 +106,11 @@ function App() {
                             element = { < TagBlog setActive = { setActive }
                                 />} / >
                                 <
-                                Route path = "/category/:category"
-                                element = { < CategoryBlog setActive = { setActive }
-                                    />} / >
-                                    <
-                                    Route path = "/about"
-                                    element = { < About / > }
-                                    /> <
-                                    Route path = "/auth"
-                                    element = { < Auth setActive = { setActive }
-                                        setUser = { setUser }
-                                        />} / >
-                                        <
-                                        Route path = "*"
-                                        element = { < NotFound / > }
-                                        /> < /
-                                        Routes > <
-                                        /div>
-                                    );
-                                }
-
-                                export default App; < Route
+                                Route
                                 path = "/category/:category"
                                 element = { < CategoryBlog setActive = { setActive }
-                                    />} / >
+                                    />} /
+                                    >
                                     <
                                     Route path = "/about"
                                     element = { < About / > }
@@ -140,12 +119,13 @@ function App() {
                                     path = "/auth"
                                     element = { < Auth setActive = { setActive }
                                         setUser = { setUser }
-                                        />} / >
+                                        />} /
+                                        >
                                         <
                                         Route path = "*"
                                         element = { < NotFound / > }
-                                        /> < /
-                                        Routes > <
+                                        /> <
+                                        /Routes> <
                                         /div>
                                     );
                                 }
