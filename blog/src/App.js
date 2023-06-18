@@ -80,7 +80,7 @@ function App() {
                         Route
                         path = "/create"
                         element = {
-                            user ? .uid ? ( <
+                            user && user.uid ? ( <
                                 AddEditBlog user = { user }
                                 />
                             ) : ( <
@@ -91,7 +91,7 @@ function App() {
                         Route
                         path = "/update/:id"
                         element = {
-                            user ? .uid ? ( <
+                            user && user.uid ? ( <
                                 AddEditBlog user = { user }
                                 setActive = { setActive }
                                 />
@@ -115,20 +115,41 @@ function App() {
                                     Route path = "/about"
                                     element = { < About / > }
                                     /> <
+                                    Route path = "/auth"
+                                    element = { < Auth setActive = { setActive }
+                                        setUser = { setUser }
+                                        />} / >
+                                        <
+                                        Route path = "*"
+                                        element = { < NotFound / > }
+                                        /> < /
+                                        Routes > <
+                                        /div>
+                                    );
+                                }
+
+                                export default App; < Route
+                                path = "/category/:category"
+                                element = { < CategoryBlog setActive = { setActive }
+                                    />} /
+                                    >
+                                    <
+                                    Route path = "/about"
+                                    element = { < About / > }
+                                    /> <
                                     Route
                                     path = "/auth"
-                                    element = { <
-                                        Auth setActive = { setActive }
+                                    element = { < Auth setActive = { setActive }
                                         setUser = { setUser }
-                                        />
-                                    }
-                                    /> <
-                                    Route path = "*"
-                                    element = { < NotFound / > }
-                                    /> <
-                                    /Routes> <
-                                    /div>
-                                );
-                            }
+                                        />} /
+                                        >
+                                        <
+                                        Route path = "*"
+                                        element = { < NotFound / > }
+                                        /> <
+                                        /Routes> <
+                                        /div>
+                                    );
+                                }
 
-                            export default App;
+                                export default App;
