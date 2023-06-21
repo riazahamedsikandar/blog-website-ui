@@ -44,8 +44,15 @@ function App() {
   };
 
   return (
-    <>
-      <Header user={user} handleLogout={handleLogout} />{" "}
+    <div className="App">
+      <Header
+        setActive={setActive}
+        active={active}
+        user={user}
+        handleLogout={handleLogout}
+      />
+      <ScrollToTop />
+      <ToastContainer position="top-center" />
       <Routes>
         <Route
           path="/"
@@ -53,7 +60,7 @@ function App() {
         />
         <Route
           path="/search"
-          element={<Home setActive={setActive} active={active} user={user} />}
+          element={<Home setActive={setActive} user={user} />}
         />
         <Route
           path="/detail/:id"
@@ -62,42 +69,30 @@ function App() {
         <Route
           path="/create"
           element={
-            user && user.uid ? (
-              <AddEditBlog user={user} />
-            ) : (
-              <Navigate
-                to="/
-                            "
-              />
-            )
+            user?.uid ? <AddEditBlog user={user} /> : <Navigate to="/" />
           }
-        />{" "}
+        />
         <Route
           path="/update/:id"
           element={
-            user && user.uid ? (
+            user?.uid ? (
               <AddEditBlog user={user} setActive={setActive} />
             ) : (
               <Navigate to="/" />
             )
           }
-        />{" "}
+        />
         <Route path="/blogs" element={<Blogs setActive={setActive} />} />
         <Route path="/tag/:tag" element={<TagBlog setActive={setActive} />} />
-        <Route
-          path="/category/:category"
-          element={<CategoryBlog setActive={setActive} />}
-        />
-        <Route path="/about" element={<About />} />{" "}
+        <Route path="/category/:category" element={<CategoryBlog setActive={setActive}  />} />
+        <Route path="/about" element={<About />} />
         <Route
           path="/auth"
           element={<Auth setActive={setActive} setUser={setUser} />}
         />
-        <Route path="*" element={<NotFound />} />{" "}
-      </Routes>{" "}
-      <ToastContainer />
-      <ScrollToTop />
-    </>
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </div>
   );
 }
 
